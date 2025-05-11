@@ -1,0 +1,10 @@
+Aims:
+- store player animations in an object: player_animations
+
+- create a new object called next_animation_manager
+- pass the responsibility of next_frame to next_animation_manager
+- next_animation_manager will have only one input: animation
+- using that animation, and using global state, it will detrmine the next animations to play (if any)
+
+
+

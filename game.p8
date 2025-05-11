@@ -1,20 +1,19 @@
 pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
+#include shared.lua
+#include player/player_animations_states.lua
+#include player.lua
+#include controller.lua
+
 function _init()
     current_time = 0
 
-    -- Include shared modules
-    #include animation_system.lua
-    #include player.lua
-    #include controller.lua
-
     -- Initialize player
-    
     player = create_player()
 
     -- Set initial animation state
-    player:set_animation_state(idle_animation)
+    player:set_animation_state(player_animations.idle)
 end
 
 function _update()
