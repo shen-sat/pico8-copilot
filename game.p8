@@ -10,7 +10,7 @@ function _init()
     current_time = 0
 
     -- Initialize player
-    player = create_player()
+    player = create_object(64, 64)
 
     -- Set initial animation state
     player:set_animation_state(player_animations.idle)

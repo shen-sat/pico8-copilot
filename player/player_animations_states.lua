@@ -3,19 +3,19 @@
 -- Player-specific animation states
 
 player_animations = {
-    left = create_animation_state(10, true, {
+    left = create_animation_state(10, {
         function(x, y) circfill(x, y, 5, 8) end, -- Draw circle
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 9) end, -- Draw square
         function(x, y) rectfill(x-5, y-2, x+5, y+2, 10) end -- Draw rectangle
     }),
 
-    idle = create_animation_state(3, true, {
+    idle = create_animation_state(3, {
         function(x, y) print("I", x, y, 7) end, -- Print "I"
         function(x, y) print("am", x, y, 7) end, -- Print "am"
         function(x, y) print("idle", x, y, 7) end -- Print "idle"
     }),
 
-    right = create_animation_state(5, false, {
+    right = create_animation_state(5, {
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 8) end, -- Frame 1: Red square
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 9) end, -- Frame 2: Orange square
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 10) end, -- Frame 3: Yellow square
@@ -26,5 +26,8 @@ player_animations = {
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 7) end, -- Frame 8: White square
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 6) end, -- Frame 9: Gray square
         function(x, y) rectfill(x-3, y-3, x+3, y+3, 5) end  -- Frame 10: Black square
-    })
+    }, function(parent)
+        -- Transition to idle animation after right animation finishes
+        return player_animations.idle
+    end)
 }

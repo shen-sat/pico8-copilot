@@ -1,12 +1,10 @@
 -- Removed include statement for player_animations_states.lua
 
--- Player Object
-function create_player()
+function create_object(x, y)
     return {
-        x = 64,
-        y = 64,
+        x = x,
+        y = y,
         animation_state = nil,
-        last_update_time = 0, -- Track time since last update
 
         set_animation_state = function(self, state)
             self.animation_state = state
@@ -15,7 +13,7 @@ function create_player()
 
         update = function(self, dt)
             if self.animation_state then
-                self.animation_state:update(dt)
+                self.animation_state:update(dt, self)
             end
         end,
 
