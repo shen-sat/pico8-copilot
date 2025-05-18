@@ -1,11 +1,8 @@
--- Shared utilities and systems
-
--- Animation System
-function create_animation_state(speed, frames, next_animation)
+function create_animation_state(speed, frames, loop)
     return {
         speed = speed,
         frames = frames,
-        next_animation = next_animation, -- Optional callback for next animation
+        loop = loop, -- Define the loop attribute
         elapsed_time = 0,
         current_frame = 1,
 
@@ -14,7 +11,7 @@ function create_animation_state(speed, frames, next_animation)
             self.current_frame = 1
         end,
 
-        update = function(self, dt, parent)
+        update = function(self, dt)
             self.elapsed_time = self.elapsed_time + dt
             local frame_duration = 1 / self.speed
 
@@ -23,11 +20,11 @@ function create_animation_state(speed, frames, next_animation)
                 self.current_frame = self.current_frame + 1
 
                 if self.current_frame > #self.frames then
-                    if self.next_animation then
-                        -- Transition to the next animation
-                        parent:set_animation_state(self.next_animation(parent))
+                    if not self.loop then
+                        -- Call the AnimationManager to handle the next animation
+                        AnimationManager.handle_next_animation(self)
                     else
-                        self.current_frame = 1 -- Loop back to the first frame if no next animation
+                        self.current_frame = 1 -- Loop back to the first frame
                     end
                 end
             end
