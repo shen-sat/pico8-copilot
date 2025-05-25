@@ -2,7 +2,6 @@ pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
 #include shared.lua
-#include animation_manager.lua
 #include player/player_animations_states.lua
 #include player.lua
 #include controller.lua
