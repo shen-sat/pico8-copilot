@@ -1,4 +1,11 @@
 function create_animation_state(speed, frames, loop)
+    assert(type(speed) == "number" and speed > 0, "[create_animation_state] 'speed' must be a positive number")
+    assert(type(frames) == "table" and #frames > 0, "[create_animation_state] 'frames' must be a non-empty table")
+    for i, frame in ipairs(frames) do
+        assert(type(frame) == "function", "[create_animation_state] frame #"..i.." is not a function")
+    end
+    assert(type(loop) == "boolean", "[create_animation_state] 'loop' must be a boolean value")
+
     return {
         speed = speed,
         frames = frames,
