@@ -3,6 +3,7 @@ version 36
 __lua__
 #include shared.lua
 #include player/player_animations_states.lua
+#include player/player_move_states.lua
 #include player.lua
 #include controller.lua
 
@@ -14,12 +15,16 @@ function _init()
 
     -- Set initial animation state
     player:set_animation_state(player_animations.idle)
+    -- Set initial move state
+    player:set_move_state(player_move_states.idle)
 end
 
 function _update()
     -- Handle input and update player
     controller:handle_input()
     player:update(1/30) -- Assuming 30 FPS
+    player:move()
+    
 
     current_time += 1
 end
