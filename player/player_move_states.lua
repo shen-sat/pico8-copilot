@@ -2,17 +2,15 @@
 
 player_move_states = {
     idle = create_move_state(1, {
-        function(self, caller)
-        end
+        {x = 0, y = 0} -- frame 1
     }, true),
 
     right = create_move_state(10, {
-        function(self, caller) caller.y -= 3 end, -- frame 1
-        function(self, caller) caller.y += 3 end, -- frame 2
-        function(self, caller) caller.y -= 2 end, -- frame 1
-        function(self, caller) caller.y += 2 end, -- frame 2
-        function(self, caller) caller.y -= 1 end, -- frame 1
-        function(self, caller) caller.y += 1 end, -- frame 2
-        
+        {y = -3}, -- frame 1
+        {y = 3},  -- frame 2
+        {y = -2}, -- frame 3
+        {y = 2},  -- frame 4
+        {y = -1}, -- frame 5
+        {y = 1}   -- frame 6
     }, false)
 }

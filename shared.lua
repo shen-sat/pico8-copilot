@@ -62,7 +62,13 @@ function create_move_state(speed, frames, loop)
     assert(type(speed) == "number" and speed > 0, "[create_move_state] 'speed' must be a positive number")
     assert(type(frames) == "table" and #frames > 0, "[create_move_state] 'frames' must be a non-empty table")
     for i, frame in ipairs(frames) do
-        assert(type(frame) == "function", "[create_move_state] frame #"..i.." is not a function")
+        assert(type(frame) == "table", "[create_move_state] frame #"..i.." must be a table with x and/or y keys")
+        if frame.x ~= nil then
+            assert(type(frame.x) == "number", "[create_move_state] frame #"..i.." 'x' must be a number if present")
+        end
+        if frame.y ~= nil then
+            assert(type(frame.y) == "number", "[create_move_state] frame #"..i.." 'y' must be a number if present")
+        end
     end
     assert(type(loop) == "boolean", "[create_move_state] 'loop' must be a boolean value")
     return {
@@ -97,9 +103,10 @@ function create_move_state(speed, frames, loop)
             end
         end,
         move = function(self, caller)
-            local move_fn = self.frames[self.current_frame]
-            if move_fn then
-                move_fn(self, caller)
+            local frame = self.frames[self.current_frame]
+            if frame then
+                if frame.x then caller.x += frame.x end
+                if frame.y then caller.y += frame.y end
             end
         end
     }
