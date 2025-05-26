@@ -56,21 +56,24 @@ function handle_next_state(state)
     if state == player_move_states.right then
         player:set_move_state(player_move_states.idle)
     end
+    if state == player_move_states.left then
+        player:set_move_state(player_move_states.idle)
+    end
 end
 
-function create_move_state(speed, frames, loop)
-    assert(type(speed) == "number" and speed > 0, "[create_move_state] 'speed' must be a positive number")
-    assert(type(frames) == "table" and #frames > 0, "[create_move_state] 'frames' must be a non-empty table")
+function create_framed_move_state(speed, frames, loop)
+    assert(type(speed) == "number" and speed > 0, "[create_framed_move_state] 'speed' must be a positive number")
+    assert(type(frames) == "table" and #frames > 0, "[create_framed_move_state] 'frames' must be a non-empty table")
     for i, frame in ipairs(frames) do
-        assert(type(frame) == "table", "[create_move_state] frame #"..i.." must be a table with x and/or y keys")
+        assert(type(frame) == "table", "[create_framed_move_state] frame #"..i.." must be a table with x and/or y keys")
         if frame.x ~= nil then
-            assert(type(frame.x) == "number", "[create_move_state] frame #"..i.." 'x' must be a number if present")
+            assert(type(frame.x) == "number", "[create_framed_move_state] frame #"..i.." 'x' must be a number if present")
         end
         if frame.y ~= nil then
-            assert(type(frame.y) == "number", "[create_move_state] frame #"..i.." 'y' must be a number if present")
+            assert(type(frame.y) == "number", "[create_framed_move_state] frame #"..i.." 'y' must be a number if present")
         end
     end
-    assert(type(loop) == "boolean", "[create_move_state] 'loop' must be a boolean value")
+    assert(type(loop) == "boolean", "[create_framed_move_state] 'loop' must be a boolean value")
     return {
         speed = speed,
         frames = frames,
@@ -110,4 +113,24 @@ function create_move_state(speed, frames, loop)
             end
         end
     }
+end
+
+function create_simple_move_state(update_fn, reset_fn, attrs)
+    local state = {
+        x = 0,
+        y = 0,
+        update = update_fn,
+        move = function(self, caller)
+            caller.x += self.x
+            caller.y += self.y
+        end,
+        reset = reset_fn
+    }
+    -- Copy all keys from attrs (if provided) into the state as private attributes
+    if attrs then
+        for k, v in pairs(attrs) do
+            state[k] = v
+        end
+    end
+    return state
 end
