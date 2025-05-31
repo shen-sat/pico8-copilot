@@ -116,6 +116,11 @@ function create_framed_move_state(speed, frames, loop)
 end
 
 function create_simple_move_state(update_fn, reset_fn, attrs)
+    assert(type(update_fn) == "function", "[create_simple_move_state] 'update_fn' must be a function")
+    assert(type(reset_fn) == "function", "[create_simple_move_state] 'reset_fn' must be a function")
+    if attrs ~= nil then
+        assert(type(attrs) == "table", "[create_simple_move_state] 'attrs' must be a table if provided")
+    end
     local state = {
         x = 0,
         y = 0,
@@ -126,7 +131,6 @@ function create_simple_move_state(update_fn, reset_fn, attrs)
         end,
         reset = reset_fn
     }
-    -- Copy all keys from attrs (if provided) into the state as private attributes
     if attrs then
         for k, v in pairs(attrs) do
             state[k] = v
