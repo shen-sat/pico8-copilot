@@ -4,7 +4,6 @@ __lua__
 #include shared.lua
 #include player/player_animations_states.lua
 #include player/player_move_states.lua
-#include player.lua
 #include controller.lua
 
 function _init()
