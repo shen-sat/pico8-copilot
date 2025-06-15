@@ -43,8 +43,8 @@ function create_animation_state(speed, frames, loop)
             end
         end,
 
-        draw = function(self, x, y)
-            self.frames[self.current_frame](x, y)
+        draw = function(self, caller)
+            self.frames[self.current_frame](caller)
         end
     }
 end
@@ -173,7 +173,7 @@ function create_object(x, y)
 
         draw = function(self)
             if self.animation_state then
-                self.animation_state:draw(self.x, self.y)
+                self.animation_state:draw(self)
             end
         end
     }
