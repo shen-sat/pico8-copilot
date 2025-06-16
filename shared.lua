@@ -139,10 +139,12 @@ function create_simple_move_state(update_fn, reset_fn, attrs)
     return state
 end
 
-function create_object(x, y)
+function create_object(x, y, width, height)
     return {
         x = x,
         y = y,
+        width = width,
+        height = height,
         animation_state = nil,
         move_state = nil,
 

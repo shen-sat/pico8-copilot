@@ -19,7 +19,7 @@ function _init()
     player:set_move_state(player_move_states.idle)
 
     -- Initialize card
-    card = create_object(0, 0)
+    card = create_object(0, 0, 22, 32)
     -- Set initial animation state
     card:set_animation_state(card_animations_states.idle)
     -- Set initial move state
@@ -31,6 +31,7 @@ function _update()
     controller:handle_input()
     player:update(1/30) -- Assuming 30 FPS
     player:move()
+    card:update(1/30)
     
 
     current_time += 1
@@ -39,6 +40,9 @@ end
 function _draw()
     cls() -- Clear screen
     player:draw()
+    pal(8,6)
+    card:draw()
+    pal()
 end
 __gfx__
 66666666666666668888888888888888666666666666666688888888888888886666666666666666888888888888888800000000000000000000000000000000

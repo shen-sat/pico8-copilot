@@ -7,6 +7,7 @@ controller = {
         elseif btnp(1) then -- Right button
             player:set_animation_state(player_animations.right)
             player:set_move_state(player_move_states.right)
+            card:set_animation_state(card_animations_states.selected)
         elseif btnp(2) then -- Up button
             player:set_animation_state(player_animations.idle)
             player:set_move_state(player_move_states.idle)
